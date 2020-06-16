@@ -1,7 +1,8 @@
 <?php
 
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/create_token', function () {
+    // usersテーブルのid:1のデータを取得(userインスタンスを生成)
+    $user = User::find(1);
+    // Laravel\Sanctum\HasApiTokensのメソッド
+    $token = $user->createToken('my-api-token');
+    echo $token->plainTextToken; //トークンを表示する
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
