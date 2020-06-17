@@ -18,6 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+
+    // ここは全て「sanctum」のミドルウェアが適用される
+    Route::get('/user', function (Request $request) {
+        $user = $request->user();
+        if ($user->tokenCan('user:update')) {
+            return '権限あり！';
+        }
+        return '権限なし。。。';
+    });
 });
