@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/create_token', function () {
     // 特定の権限をつける
-    $permissions = ['user:update'];
+    $permissions = ['user:deleted'];
 
     // usersテーブルのid:1のデータを取得(userインスタンスを生成)
     $user = User::find(1);
